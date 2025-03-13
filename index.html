@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon_Api</title>
+    <style>
+    .contenedor{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #root {
+            display: flex;
+            flex-direction: row;
+        }
+
+        div{
+            display: flex;
+            justify-content: center;
+        }
+        img {
+            display: flex;
+            align-self: center;
+            height: 100px;
+            width: 170px;
+            margin: 3px;
+            opacity: 1;
+            object-fit: contain;
+            border-style: solid;
+            border-color: black;
+            background-color: white;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            border-radius: 5%;
+            border-width: 5px;
+            border-style: solid;
+            border-color: black;
+            margin: 10px;
+            box-shadow: 0 0 16px 0 rgba(0, 0, 0, .4);
+            width: 180px;
+            height: 300px;
+        }
+
+        h1 {
+            display: flex;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            align-self: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+        <h1>Busca un pokemon</h1>
+        <form id="addPokemonForm">
+            <input type="text" id="pokemonName" />
+            <button type="submit">Add Pokemon</button>
+        </form>
+    </div>
+
+    <div id="root"></div>
+      
+    <script>
+        const API_URL = "https://pokeapi.co/api/v2/pokemon";
+        const root = document.getElementById("root");
+        const form = document.getElementById("addPokemonForm");
+        form.addEventListener("submit", (event) => {
+            // Prevents the form from submitting and refreshing the page
+        event.preventDefault();
+        const pokemonName = document.getElementById("pokemonName").value;
+        fetch(`${API_URL}/${pokemonName}`)
+            .then((response) => response.json())
+            .then((newPokemon) => {
+            // create elements for the Pokemon Card
+            const div = document.createElement("div");
+            const image = document.createElement("img");
+            const name = document.createElement("h1");
+            div.className = "card";
+            image.src = newPokemon.sprites.other.dream_world.front_default;
+            name.textContent = newPokemon.name;
+            div.appendChild(name);
+            div.appendChild(image);
+            root.appendChild(div);
+
+            // another image option:
+            //image.src = newPokemon.sprites.front_default;
+            // other ideas:
+            // div.appendChild(pokemonNameLabel);
+            // div.appendChild(pokemonAttack);
+            // div.appendChild(pokemonHealth);
+            });
+        });
+    </script>
+</body>
+</html>
