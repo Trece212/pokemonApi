@@ -12,17 +12,24 @@
             margin-bottom: 10px;
         }
 
-        #root{
+        .cont{
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
         }
 
+        #root{
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+        }
+
         .card{
-            display: block;
-            padding: 5px;
-            margin: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            max-width: 200px;
+            padding: 20px;
             border: solid 2px rgba(0, 0, 0, 0.625);
             border-radius: 8px;
             background-color: beige;
@@ -30,13 +37,29 @@
         }
 
         .card h1{
+            font-size: 20px;
             text-transform: uppercase;
             text-align: center;
         }
 
         .card img{
-            width: 400px;
-            height: 400px;
+            max-width: 200px;
+        }
+        @media(max-width:768px){
+            #root{
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media(max-width:480px){
+            #root{
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .card{
+                max-width: 180px;
+            }
+            .card img{
+                max-width: 160px;
+            }
         }
     </style>
 </head>
@@ -50,8 +73,10 @@
         </form>
     </div>
 
-    <div id="root"></div>
-      
+    <div class="cont">
+        <div id="root"></div>
+    </div>
+
     <script>
         const API_URL = "https://pokeapi.co/api/v2/pokemon";
         const root = document.getElementById("root");
